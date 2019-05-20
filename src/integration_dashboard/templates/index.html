@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, minimum-scale=1">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
+	{% load staticfiles %}
+	<script type="text/javascript" src="{% static 'jquery.js' %}"></script>
+
+	{% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+
+	{% load staticfiles %}
+    <script type="text/javascript" src="{% static 'bootstrap.bundle.min.js' %}"></script>
+
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+	{% load staticfiles %}
+    <script src="{% static 'plotly-latest.min.js' %}"></script>
+</head>
+<body>
+	
+	<!-- #4761C8    #1F2438 -->
+ 
+	<div class="nav-left">
+		<div class="header">
+			<div class="text">Dashboard</div>
+		</div>
+
+		<div class="menu-container">
+			<ul>
+
+					<li class="raw_file">
+						<div class="text">Raw File</div>
+					</li>
+					<li class="home">
+						<div class="text">Usage</div>
+					</li>
+
+			</ul>
+		</div>
+	</div>
+
+
+	<div class="maincont">
+		
+	</div>
+</body>
+	<script type="text/javascript">
+		var width_initial= $(window).width() - $('.nav-left').width() - 20;
+        $('.maincont').css("width" , width_initial);
+
+        $('.maincont').load('/raw_file');
+
+        $('.home').click(function(){
+        	$('.maincont').load('/stats');
+        })
+        $('.raw_file').click(function(){
+        	$('.maincont').load('/raw_file');
+        })
+
+        $( window ).resize(function() {
+            width_initial= $(window).width() - $('.nav-left').width() - 20;
+        	$('.maincont').css("width" , width_initial);
+        });
+
+	</script>
+</html>

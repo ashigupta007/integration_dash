@@ -1,0 +1,84 @@
+<div>
+	<div class="row sml-row">
+				<div class="col-sm-3">
+					<div class="box-container">
+						<h3>Pending Upload</h3>
+						<div class="stats-cont">
+							5,43,534
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-3">
+					<div class="box-container">
+						<h3>Crashes</h3>
+						<div class="stats-cont">
+							{{ crashes }}
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-3">
+					<div class="box-container">
+						<h3>System Status</h3>
+						<div class="stats-cont">
+							{{system_status}}
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-3">
+					<div class="box-container">
+						<h3>AvG. Crash</h3>
+						<div class="stats-cont avg_crash">
+							
+						</div>
+					</div>
+				</div>
+		</div>
+
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<div class="box-container">
+					<h3>Usage Graph</h3>
+
+					<div id="graph" style="width:100%;display: block;margin-top: 10px;"></div>
+				</div>
+			</div>
+		</div>
+</div>
+
+<script type="text/javascript">
+	crash_data = {{crash_data}};
+    crash_dates = {{crash_dates|safe}};
+    $('.avg_crash').append(parseInt(eval(crash_data.join('+'))/crash_data.length));
+
+    var active_license={
+        	  type: "scatter",
+	          mode: "lines",
+	          name: 'Crashes Per Day',
+	          line:{
+	            color: '#86BBD8',
+	          },
+	         x: [],
+  			y: [],
+	          
+        };
+
+        for(data in crash_dates)
+        {
+        	active_license.x.push(data);
+        }
+
+        for(data in crash_data)
+        {
+        	active_license.y.push(data);
+        }
+        graph= document.getElementById('graph');
+         Plotly.newPlot(graph, [active_license], {margin: { t: 0 }, paper_bgcolor:'rgba(0,0,0,0)',
+    plot_bgcolor:'rgba(0,0,0,0)', font: {
+    // family: 'Courier New, monospace',
+    // size: 18,
+    color: '#ffffff'
+  } });
+</script>

@@ -1,0 +1,60 @@
+
+<div class="row row-lg" style="margin-top: 0px; height: 100%;">
+		<div class="col-sm-12">
+			<div class="box-container" style="overflow-y:auto ">
+				<h3>Raw File Preview</h3>
+				<p class="small" style="margin-top: 30px">Click on the Table Header to sort the Table</p>
+				<div class="table-responsive">
+				<table class="table">
+					<tr>
+						<th>SolutionID</th>
+						<th>LineID</th>
+						<th>Path</th>
+						<th>SourceBOM</th>
+						<th>NewItemCreate</th>
+						<th>QueryOutput</th>
+						<th>InterimLoadFIle</th>
+						<th>FinalLoadFile</th>
+						<th>DataSets</th>
+						<th>TopNode</th>
+						<th>EngReUse</th>
+						<th>NX_1</th>
+						<th>NX_2s</th>
+					</tr>
+						
+
+				</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<script type="text/javascript">
+	var data_received= {{table_data|safe}};
+
+	for(rows in data_received)
+	{
+		$('tbody').append(`<tr> </tr>`);
+		for(cols in data_received[rows])
+		{
+			$('tbody tr:nth-last-child(1)').append(`<td>${data_received[rows][cols]}</td>`);
+		}
+	}
+	
+
+
+	getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
+
+	comparer = (idx, asc) => (a, b) => ((v1, v2) => 
+    v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
+    )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
+
+// do the work...
+document.querySelectorAll('th').forEach(th => th.addEventListener('click', (() => {
+    const table = th.closest('table');
+    Array.from(table.querySelectorAll('tr:nth-child(n+2)'))
+        .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+        .forEach(tr => table.appendChild(tr) );
+})));
+</script>
